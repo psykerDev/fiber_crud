@@ -4,6 +4,6 @@ import "time"
 
 type Reply struct {
 	CreatedAt time.Time
-	ReplyID   uint   `json:"reyly_id" gorm:"unique" gorm:"primaryKey"`
+	ReplyID   uint   `json:"reply_id" gorm:"primaryKey"`
 	Comment   string `json:"comment"`
 }

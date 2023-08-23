@@ -9,9 +9,9 @@ import (
 )
 
 type User struct {
-	ID    uint   `json:"id" gorm:"primaryKey"`
-	Email string `json:"email" gorm:"unique"`
-	Name  string `json:"name" gorm:"unique"`
+	ID    uint   `json:"id"`
+	Email string `json:"email" `
+	Name  string `json:"name"`
 }
 
 func CreateresponsUser(userModel models.User) User {
