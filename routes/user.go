@@ -1,9 +1,8 @@
 package routes
 
 import (
-	"errors"
-
 	"github.com/gofiber/fiber/v2"
+	routes "main.go/Tooling"
 	"main.go/initializers"
 	"main.go/models"
 )
@@ -48,16 +47,6 @@ func GetUsers(c *fiber.Ctx) error {
 
 }
 
-// find user utility function
-func findUser(id int, user *models.User) error {
-	initializers.DB.Find(&user, "id = ?", id)
-	if user.ID == 0 {
-		return errors.New("user does not exist")
-	}
-	return nil
-
-}
-
 // get user by id
 func GetUserById(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
@@ -67,7 +56,7 @@ func GetUserById(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(400).JSON("id is trash")
 	}
-	if err := findUser(id, &user); err != nil {
+	if err := routes.FindUser(id, &user); err != nil {
 		return c.Status(400).JSON(err.Error())
 
 	}
@@ -84,7 +73,7 @@ func UpdateUser(c *fiber.Ctx) error {
 		return c.Status(400).JSON("id is trash")
 	}
 
-	if err := findUser(id, &user); err != nil {
+	if err := routes.FindUser(id, &user); err != nil {
 		return c.Status(400).JSON(err.Error())
 	}
 
@@ -116,7 +105,7 @@ func DeleteUser(c *fiber.Ctx) error {
 		return c.Status(400).JSON("id is trash")
 	}
 
-	if err := findUser(id, &user); err != nil {
+	if err := routes.FindUser(id, &user); err != nil {
 		return c.Status(400).JSON(err.Error())
 	}
 	initializers.DB.Delete(&user, id)

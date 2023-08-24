@@ -1,9 +1,8 @@
 package routes
 
 import (
-	"errors"
-
 	"github.com/gofiber/fiber/v2"
+	routes "main.go/Tooling"
 	"main.go/initializers"
 	"main.go/models"
 )
@@ -16,15 +15,8 @@ type Posts struct {
 }
 
 func CreateresponsPost(postModel models.Post) Posts {
-	return Posts{PostID: postModel.PostID, Title: postModel.Title, Body: postModel.Body, User_ID: postModel.User_ID}
+	return Posts{PostID: postModel.Post_ID, Title: postModel.Title, Body: postModel.Body, User_ID: postModel.User_ID}
 
-}
-func FindPosts(id int, post *models.Post) error {
-	initializers.DB.Find(&post, "id = ?", id)
-	if post.PostID == 0 {
-		return errors.New("post does not exist")
-	}
-	return nil
 }
 
 // create post
@@ -36,7 +28,7 @@ func CreatePost(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(400).JSON("invalid id ")
 	}
-	if err := findUser(id, &user); err != nil {
+	if err := routes.FindUser(id, &user); err != nil {
 		return c.Status(400).JSON(err.Error())
 	}
 	if err := c.BodyParser(&posts); err != nil {
