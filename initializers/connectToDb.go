@@ -5,7 +5,6 @@ import (
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"main.go/models"
 )
 
 var DB *gorm.DB
@@ -17,7 +16,4 @@ func ConnectToDb() {
 	if err != nil {
 		log.Fatal(err)
 	}
-}
-func SyncDb() {
-	DB.AutoMigrate(&models.Post{}, &models.User{}, &models.Reply{})
 }

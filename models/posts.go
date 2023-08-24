@@ -8,7 +8,7 @@ type Post struct {
 	CreatedAt time.Time
 	Body      string `json:"body"`
 	User_ID   uint   `json:"user_id"`
-	Reply_ID  uint   `json:"reply_id"`
-	User      User   `gorm:"foreignKey:ID;references:User_ID"`
-	Reply     Reply  `gorm:"foreignKey:ReplyID;references:Reply_ID"`
+	//Reply_ID  uint   `json:"reply_id"`
+	// User      User   `gorm:"foreignKey:ID;references:User_ID"`
+	// Reply     Reply  `gorm:"foreignKey:ReplyID;references:Reply_ID"`
 }
