@@ -17,8 +17,8 @@ func FindUser(id int, user *models.User) error {
 
 }
 func FindPosts(id int, post *models.Post) error {
-	initializers.DB.Find(&post, "post_id = ?", id)
-	if post.Post_ID == 0 {
+	initializers.DB.Find(&post, "id = ?", id)
+	if post.ID == 0 {
 		return errors.New("post does not exist")
 	}
 	return nil

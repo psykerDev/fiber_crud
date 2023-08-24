@@ -8,14 +8,14 @@ import (
 )
 
 type Posts struct {
-	PostID  uint   `json:"post_id"`
+	ID      uint   `json:"id"`
 	Title   string `json:"title"`
 	Body    string `json:"body"`
 	User_ID uint   `json:"user_id"`
 }
 
 func CreateresponsPost(postModel models.Post) Posts {
-	return Posts{PostID: postModel.Post_ID, Title: postModel.Title, Body: postModel.Body, User_ID: postModel.User_ID}
+	return Posts{ID: postModel.ID, Title: postModel.Title, Body: postModel.Body, User_ID: postModel.User_ID}
 
 }
 

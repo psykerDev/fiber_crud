@@ -8,13 +8,13 @@ import (
 )
 
 type Reply struct {
-	ReplyID uint   `json:"reply_id"`
+	ID      uint   `json:"id"`
 	Post_ID uint   `json:"post_id"`
 	Comment string `json:"comment"`
 }
 
 func CreateResponsReply(modelReply models.Reply) Reply {
-	return Reply{ReplyID: modelReply.ReplyID, Post_ID: modelReply.Post_ID, Comment: modelReply.Comment}
+	return Reply{ID: modelReply.ID, Post_ID: modelReply.Post_ID, Comment: modelReply.Comment}
 }
 func CreateReply(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")

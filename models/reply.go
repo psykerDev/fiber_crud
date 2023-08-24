@@ -3,8 +3,9 @@ package models
 import "time"
 
 type Reply struct {
-	ReplyID   uint   `json:"reply_id" gorm:"primaryKey"`
+	ID        uint   `json:"id" gorm:"primaryKey"`
 	Post_ID   uint   `json:"post_id"`
+	Post      Post   `json:"foreignKey:Post_ID"`
 	Comment   string `json:"comment"`
 	CreatedAt time.Time
 }
