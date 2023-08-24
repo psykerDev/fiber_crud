@@ -9,35 +9,39 @@ import (
 
 type Reply struct {
 	ID      uint   `json:"id"`
-	Post_ID uint   `json:"post_id"`
+	Posts   Posts  `json:"post"`
+	User    User   `json:"user"`
 	Comment string `json:"comment"`
 }
 
-func CreateResponsReply(modelReply models.Reply) Reply {
-	return Reply{ID: modelReply.ID, Post_ID: modelReply.Post_ID, Comment: modelReply.Comment}
+func CreateResponsReply(modelReply models.Reply, post Posts, user User) Reply {
+	return Reply{ID: modelReply.ID, Posts: post, Comment: modelReply.Comment, User: user}
 }
 func CreateReply(c *fiber.Ctx) error {
-	id, err := c.ParamsInt("id")
 
 	var posts models.Post
 	var reply models.Reply
-
-	if err != nil {
-		return c.Status(400).JSON("shit id ")
-	}
-	if err := routes.FindPosts(id, &posts); err != nil {
-
-		return c.Status(400).JSON(err.Error())
-	}
-
+	var user models.User
+	var postUser models.User
 	if err := c.BodyParser(&reply); err != nil {
 		return c.Status(400).JSON(err.Error())
 	}
+	if err := routes.FindPosts(int(reply.Post_ID), &posts); err != nil {
+		return c.Status(400).JSON(err.Error())
+	}
+	if err := routes.FindUser(int(reply.User_ID), &user); err != nil {
+		return c.Status(400).JSON(err.Error())
+	}
+	if err := routes.FindUser(int(reply.Post_ID), &postUser); err != nil {
+		return c.Status(400).JSON(err.Error())
+	}
+
 	initializers.DB.Create(&reply)
 
-	reply.Post_ID = uint(id)
-	initializers.DB.Save(&reply)
+	responsUser := CreateresponsUser(user)
+	responsPostUser := CreateresponsUser(postUser)
+	responsPost := CreateresponsPost(posts, responsPostUser)
 
-	responseReply := CreateResponsReply(reply)
+	responseReply := CreateResponsReply(reply, responsPost, responsUser)
 	return c.Status(200).JSON(responseReply)
 }

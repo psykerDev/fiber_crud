@@ -18,8 +18,8 @@ func SetupRoutes(app *fiber.App) {
 	app.Get("/getUser/:id", routes.GetUserById)
 	app.Patch("/update/:id", routes.UpdateUser)
 	app.Delete("/delUser/:id", routes.DeleteUser)
-	app.Post("/createPost/:id", routes.CreatePost)
-	app.Post("/reply/:id", routes.CreateReply)
+	app.Post("/createPost", routes.CreatePost)
+	app.Post("/reply", routes.CreateReply)
 }
 func main() {
 	app := fiber.New()

@@ -8,37 +8,33 @@ import (
 )
 
 type Posts struct {
-	ID      uint   `json:"id"`
-	Title   string `json:"title"`
-	Body    string `json:"body"`
-	User_ID uint   `json:"user_id"`
+	ID    uint   `json:"id"`
+	Title string `json:"title"`
+	Body  string `json:"body"`
+	User  User   `json:"user"`
 }
 
-func CreateresponsPost(postModel models.Post) Posts {
-	return Posts{ID: postModel.ID, Title: postModel.Title, Body: postModel.Body, User_ID: postModel.User_ID}
+func CreateresponsPost(postModel models.Post, user User) Posts {
+	return Posts{ID: postModel.ID, Title: postModel.Title, Body: postModel.Body, User: user}
 
 }
 
 // create post
 func CreatePost(c *fiber.Ctx) error {
-	id, err := c.ParamsInt("id")
 	var user models.User
 	var posts models.Post
-
-	if err != nil {
-		return c.Status(400).JSON("invalid id ")
-	}
-	if err := routes.FindUser(id, &user); err != nil {
-		return c.Status(400).JSON(err.Error())
-	}
 	if err := c.BodyParser(&posts); err != nil {
 		return c.Status(400).JSON(err.Error())
 	}
+
+	if err := routes.FindUser(int(posts.User_ID), &user); err != nil {
+		return c.Status(400).JSON(err.Error())
+	}
+
 	initializers.DB.Create(&posts)
 
-	posts.User_ID = uint(id)
-	initializers.DB.Save(&posts)
-	responsPost := CreateresponsPost(posts)
+	responsUser := CreateresponsUser(user)
+	responsPost := CreateresponsPost(posts, responsUser)
 	return c.Status(200).JSON(responsPost)
 
 }
