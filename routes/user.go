@@ -13,7 +13,7 @@ type User struct {
 	Name  string `json:"name"`
 }
 
-func CreateresponsUser(userModel models.User) User {
+func CreateResponsUser(userModel models.User) User {
 	return User{ID: userModel.ID, Email: userModel.Email, Name: userModel.Name}
 }
 
@@ -26,7 +26,7 @@ func CreateUser(c *fiber.Ctx) error {
 	}
 	initializers.DB.Create(&user)
 
-	responsUser := CreateresponsUser(user)
+	responsUser := CreateResponsUser(user)
 	return c.Status(200).JSON(responsUser)
 
 }
@@ -40,7 +40,7 @@ func GetUsers(c *fiber.Ctx) error {
 	responsUsers := []User{}
 
 	for _, user := range users {
-		responsUser := CreateresponsUser(user)
+		responsUser := CreateResponsUser(user)
 		responsUsers = append(responsUsers, responsUser)
 	}
 	return c.Status(200).JSON(responsUsers)
@@ -60,7 +60,7 @@ func GetUserById(c *fiber.Ctx) error {
 		return c.Status(400).JSON(err.Error())
 
 	}
-	responsUser := CreateresponsUser(user)
+	responsUser := CreateResponsUser(user)
 	return c.Status(200).JSON(responsUser)
 
 }
@@ -90,7 +90,7 @@ func UpdateUser(c *fiber.Ctx) error {
 	user.Name = updateData.Name
 
 	initializers.DB.Save(&user)
-	responsUser := CreateresponsUser(user)
+	responsUser := CreateResponsUser(user)
 
 	return c.Status(200).JSON(responsUser)
 
@@ -109,7 +109,7 @@ func DeleteUser(c *fiber.Ctx) error {
 		return c.Status(400).JSON(err.Error())
 	}
 	initializers.DB.Delete(&user, id)
-	responsUser := CreateresponsUser(user)
+	responsUser := CreateResponsUser(user)
 	return c.Status(200).JSON(responsUser)
 
 }

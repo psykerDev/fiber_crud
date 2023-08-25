@@ -13,12 +13,19 @@ func init() {
 	initializers.SyncDb()
 }
 func SetupRoutes(app *fiber.App) {
-	app.Post("/", routes.CreateUser)
-	app.Get("/allUsers", routes.GetUsers)
-	app.Get("/getUser/:id", routes.GetUserById)
-	app.Patch("/update/:id", routes.UpdateUser)
-	app.Delete("/delUser/:id", routes.DeleteUser)
-	app.Post("/createPost", routes.CreatePost)
+	//user end points
+	app.Post("/user", routes.CreateUser)
+	app.Get("/users", routes.GetUsers)
+	app.Get("/user/:id", routes.GetUserById)
+	app.Patch("/user/:id", routes.UpdateUser)
+	app.Delete("/user/:id", routes.DeleteUser)
+	// post end points
+	app.Post("/post", routes.CreatePost)
+	app.Get("/posts", routes.GetPosts)
+	app.Get("/post/:id", routes.GetPostById)
+	app.Delete("/post/:id", routes.DeletePost)
+	app.Patch("/post/:id", routes.UpdatePost)
+	// reply end points
 	app.Post("/reply", routes.CreateReply)
 }
 func main() {

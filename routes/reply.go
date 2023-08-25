@@ -38,9 +38,9 @@ func CreateReply(c *fiber.Ctx) error {
 
 	initializers.DB.Create(&reply)
 
-	responsUser := CreateresponsUser(user)
-	responsPostUser := CreateresponsUser(postUser)
-	responsPost := CreateresponsPost(posts, responsPostUser)
+	responsUser := CreateResponsUser(user)
+	responsPostUser := CreateResponsUser(postUser)
+	responsPost := CreateResponsPost(posts, responsPostUser)
 
 	responseReply := CreateResponsReply(reply, responsPost, responsUser)
 	return c.Status(200).JSON(responseReply)
