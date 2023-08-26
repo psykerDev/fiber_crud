@@ -23,3 +23,11 @@ func FindPosts(id int, post *models.Post) error {
 	}
 	return nil
 }
+func FindReply(id int, reply *models.Reply) error {
+
+	initializers.DB.Find(&reply, "id = ?", id)
+	if reply.ID == 0 {
+		return errors.New("reply does not exist")
+	}
+	return nil
+}

@@ -2,9 +2,9 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
-	routes "main.go/Tooling"
 	"main.go/initializers"
 	"main.go/models"
+	routes "main.go/tools"
 )
 
 type Posts struct {

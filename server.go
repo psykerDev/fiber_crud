@@ -27,6 +27,10 @@ func SetupRoutes(app *fiber.App) {
 	app.Patch("/post/:id", routes.UpdatePost)
 	// reply end points
 	app.Post("/reply", routes.CreateReply)
+	app.Get("/reply", routes.GetReplys)
+	app.Get("/reply/:id", routes.GetReplyById)
+	app.Patch("/reply/:id", routes.UpdateReply)
+	app.Delete("/reply/:id", routes.DeleteReply)
 }
 func main() {
 	app := fiber.New()
